@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import Shop from './components/Shop/Shop.vue';
 import Cart from './components/Cart/Cart.vue';
-import { computed, reactive, watchEffect, watch } from 'vue';
+import { computed, reactive, watchEffect, watch, provide, toRef } from 'vue';
 import type {
   FiltersInterface,
   ProductCartInterface,
