@@ -93,11 +93,7 @@ const filteredProducts = computed(() => {
     if (
       product.title
         .toLocaleLowerCase()
-        .startsWith(state.filters.search.toLocaleLowerCase()) &&
-      product.price >= state.filters.priceRange[0] &&
-      product.price <= state.filters.priceRange[1] &&
-      (product.category === state.filters.category ||
-        state.filters.category === 'all')
+        .startsWith(state.filters.search.toLocaleLowerCase())
     ) {
       return true;
     } else {
