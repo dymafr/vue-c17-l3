@@ -10,6 +10,7 @@ import type {
 } from '../../interfaces';
 import { DEFAULT_FILTERS } from './data/filters';
 import { fetchProducts } from '../../shared/services/product.service';
+import { pageKey } from '../../shared/injectionKeys/pageKey';
 
 const state = reactive<{
   products: ProductInterface[];
@@ -26,6 +27,8 @@ const state = reactive<{
   isLoading: true,
   moreResults: true,
 });
+
+provide(pageKey, toRef(state, 'page'));
 
 watch(state.filters, () => {
   state.page = 1;
