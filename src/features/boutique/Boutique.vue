@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import Shop from './components/Shop/Shop.vue';
 import Cart from './components/Cart/Cart.vue';
-import { computed, reactive, watchEffect } from 'vue';
+import { computed, reactive, watchEffect, watch } from 'vue';
 import type {
   FiltersInterface,
   ProductCartInterface,
@@ -25,6 +25,11 @@ const state = reactive<{
   page: 1,
   isLoading: true,
   moreResults: true,
+});
+
+watch(state.filters, () => {
+  state.page = 1;
+  state.products = [];
 });
 
 watchEffect(async () => {
