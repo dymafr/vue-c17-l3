@@ -8,6 +8,9 @@ export async function fetchProducts(
   if (filter.category !== 'all') {
     query.append('category', filter.category);
   }
+  if (page !== 1) {
+    query.append('skip', (page - 1) * 20 + '');
+  }
   query.append('limit', '20');
   query.append('price', `$lte:${filter.priceRange[1]}`);
   query.append('price', `$gte:${filter.priceRange[0]}`);

@@ -15,19 +15,30 @@ const state = reactive<{
   products: ProductInterface[];
   cart: ProductCartInterface[];
   filters: FiltersInterface;
+  page: number;
+  isLoading: boolean;
+  moreResults: boolean;
 }>({
   products: [],
   cart: [],
   filters: { ...DEFAULT_FILTERS },
+  page: 1,
+  isLoading: true,
+  moreResults: true,
 });
 
 watchEffect(async () => {
-  const products = await fetchProducts(state.filters);
+  state.isLoading = true;
+  const products = await fetchProducts(state.filters, state.page);
   if (Array.isArray(products)) {
     state.products = [...state.products, ...products];
+    if (products.length < 20) {
+      state.moreResults = false;
+    }
   } else {
-    state.products = [products];
+    state.products = [...state.products, products];
   }
+  state.isLoading = false;
 });
 
 function addProductToCart(productId: string): void {
@@ -92,9 +103,11 @@ const filteredProducts = computed(() => {
   <div class="boutique-container" :class="{ 'grid-empty': cartEmpty }">
     <Shop
       @update-filter="updateFilter"
+      @add-product-to-cart="addProductToCart"
+      @inc-page="state.page++"
       :products="filteredProducts"
       :filters="state.filters"
-      @add-product-to-cart="addProductToCart"
+      :more-results="state.moreResults"
       class="shop"
     />
     <Cart
