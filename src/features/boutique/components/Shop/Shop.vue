@@ -10,6 +10,7 @@ import ShopFilters from './ShopFilters.vue';
 defineProps<{
   products: ProductInterface[];
   filters: FiltersInterface;
+  moreResults: boolean;
 }>();
 
 const emit = defineEmits<{
@@ -32,6 +33,7 @@ const emit = defineEmits<{
       @add-product-to-cart="emit('addProductToCart', $event)"
       @inc-page="emit('incPage')"
       :products="products"
+      :more-results="moreResults"
     />
   </div>
 </template>

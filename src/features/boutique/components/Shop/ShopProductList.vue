@@ -4,6 +4,7 @@ import ShopProduct from './ShopProduct.vue';
 
 defineProps<{
   products: ProductInterface[];
+  moreResults: boolean;
 }>();
 
 const emit = defineEmits<{
@@ -22,7 +23,10 @@ const emit = defineEmits<{
         :product="product"
       />
     </div>
-    <div class="d-flex flex-row align-items-center justify-content-center">
+    <div
+      v-if="moreResults"
+      class="d-flex flex-row align-items-center justify-content-center"
+    >
       <button @click="emit('incPage')" class="btn btn-primary">
         Charger plus de produits
       </button>
